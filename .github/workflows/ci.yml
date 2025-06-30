@@ -55,7 +55,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASS }}
+          password: ${{ secrets.DOCKER_PASS }} #
           logout: true
 
       - name: Build and Push action
@@ -65,19 +65,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USER }}/go-web-app:${{ github.run_id }}
-
-  update-newtag-in-helm-chart:
-    runs-on: ubuntu-latest
-    needs: push
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.email "alansebastian484@gmail.com"
-          git config --global user.name "Alan Sebastian"
-          git add helm/go-web-app-chart/values.yaml
-          git commit -m "Update tag in Helm chart"
-          git push
