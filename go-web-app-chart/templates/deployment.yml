@@ -2,15 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: { { include "go-web-app-chart.fullname" . } }
-  labels: { { - include "go-web-app-chart.labels" . | nindent 4 } }
+  labels: { { include "go-web-app-chart.labels" . | nindent 4 } }
 spec:
   replicas: { { .Values.replicaCount } }
   selector:
-    matchLabels:
-      { { - include "go-web-app-chart.selectorLabels" . | nindent 6 } }
+    matchLabels: { { include "go-web-app-chart.selectorLabels" . | nindent 6 } }
   template:
     metadata:
-      labels: { { - include "go-web-app-chart.selectorLabels" . | nindent 8 } }
+      labels: { { include "go-web-app-chart.selectorLabels" . | nindent 8 } }
     spec:
       containers:
         - name: { { .Chart.Name } }
