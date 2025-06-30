@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: main
+    paths-ignore:
+      - "helm/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        users: actions/checkout@v4
+
+      - name: setup go
+        users: actions/setup-go@v2
+        with:
+          go-version: 1.22
+
+      - name: build
+        run: go build -o go-web-app
+
+      - name: test
+        run: go test ./...
