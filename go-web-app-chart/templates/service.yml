@@ -1,14 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-web-app
-  labels:
-    app: go-web-app
+  name: { { include "go-web-app-chart.fullname" . } }
+  labels: { { - include "go-web-app-chart.labels" . | nindent 4 } }
 spec:
-  selector:
-    app: go-web-app
+  type: { { .Values.service.type } }
+  selector: { { - include "go-web-app-chart.selectorLabels" . | nindent 4 } }
   ports:
-    - port: 80
-      targetPort: 8085
-      protocol: TCP
-  type: LoadBalancer
+    - port: { { .Values.service.port } }
+      targetPort: { { .Values.service.targetPort } }
+      protocol: { { .Values.service.protocol } }

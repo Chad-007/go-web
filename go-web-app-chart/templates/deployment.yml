@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-web-app
+  name: { { include "go-web-app-chart.fullname" . } }
+  labels: { { - include "go-web-app-chart.labels" . | nindent 4 } }
 spec:
-  replicas: 3
+  replicas: { { .Values.replicaCount } }
   selector:
     matchLabels:
-      app: go-web-app
+      { { - include "go-web-app-chart.selectorLabels" . | nindent 6 } }
   template:
     metadata:
-      labels:
-        app: go-web-app
+      labels: { { - include "go-web-app-chart.selectorLabels" . | nindent 8 } }
     spec:
       containers:
-        - name: go-web-app
-          image: chad0/my-go-web-app:new
+        - name: { { .Chart.Name } }
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: { { .Values.image.pullPolicy } }
           ports:
-            - containerPort: 8085
+            - containerPort: { { .Values.container.port } }

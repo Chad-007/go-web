@@ -1,0 +1,17 @@
+replicaCount: 3
+
+image:
+  repository: chad0/my-go-web-app
+  tag: new
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8085
+  protocol: TCP
+container:
+  port: 8085
+
+nameOverride: ""
+fullnameOverride: ""
