@@ -56,6 +56,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKERHUB_PASS }}
+          logout: true
 
       - name: Build and Push action
         uses: docker/build-push-action@v6
