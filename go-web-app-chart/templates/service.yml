@@ -2,11 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: new-one
-  labels: new-one
+  labels:
+    app: new-one
 spec:
   type: LoadBalancer
   selector:
+    app: go-web-app
   ports:
     - port: { { .Values.service.port } }
       targetPort: { { .Values.service.targetPort } }
-      protocol: { { .Values.service.protocol } }
+      protocol: "{{ .Values.service.protocol }}"

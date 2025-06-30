@@ -12,6 +12,3 @@ service:
   protocol: TCP
 container:
   port: 8085
-
-nameOverride: ""
-fullnameOverride: ""
